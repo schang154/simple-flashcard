@@ -1,0 +1,29 @@
+{
+  "name": "simple-flashcard-for-fun",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple Flashcard For Fun",
+  "author": "Shih-Hung Chang <shchang1128@gmail.com>",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.1.1",
+    "@mui/material": "^5.1.1",
+    "gatsby": "^3.11.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.0.2"
+  },
+  "license": "MIT"
+}
