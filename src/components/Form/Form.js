@@ -13,10 +13,9 @@ const Form = ({ currentCardId, setCurrentCardId }) => {
     backMessage: "",
     tags: "",
   });
-  const card = useSelector((state) =>
-    currentCardId
-      ? state.cards.find((card) => card._id === currentCardId)
-      : null
+  const card = useSelector(
+    (state) =>
+      currentCardId && state.cards.find((card) => card._id === currentCardId)
   );
   const dispatch = useDispatch();
 
@@ -44,7 +43,7 @@ const Form = ({ currentCardId, setCurrentCardId }) => {
   };
 
   return (
-    <Paper>
+    <Paper elevation={3} sx={{ padding: 2, margin: 2 }}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Typography variant="h6">
           {currentCardId ? "Editing" : "Creating"} a Card
@@ -76,7 +75,10 @@ const Form = ({ currentCardId, setCurrentCardId }) => {
           fullWidth
           value={cardData.tags}
           onChange={(e) => {
-            setCardData({ ...cardData, tags: e.target.value.replace(/ /g, "").split(",") });
+            setCardData({
+              ...cardData,
+              tags: e.target.value.replace(/ /g, "").split(","),
+            });
           }}
         />
         <Button
