@@ -12,6 +12,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     }
     return <Component {...rest} />;
   }
-
+  return null;
 };
 export default PrivateRoute;
