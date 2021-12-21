@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 import { useSelector, useDispatch } from "react-redux";
-import { createCard, updateCard } from "../../actions/cards";
+import { createCard, updateCard } from "../../../actions/cards";
 
 const TextFieldStyle = {
   my: 1,

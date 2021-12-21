@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getCards } from "../../actions/cards";
+import { getCards } from "../../../actions/cards";
 import FlashCards from "../FlashCards/FlashCards";
 import Form from "../Form/Form";
 import {

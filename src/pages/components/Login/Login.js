@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { emphasize } from "@mui/material/styles";
+import { AUTH } from "../../../constants/actionTypes";
+import { signIn, signUp } from "../../../actions/auth";
 import { navigate } from "gatsby";
 import { useDispatch } from "react-redux";
-import { AUTH } from "../../constants/actionTypes";
-import { signIn, signUp } from "../../actions/auth";
 import { GoogleLogin } from "react-google-login";
 import { Button, Paper, Grid, Typography, Container } from "@mui/material";
 import Input from "../Input/Input";
+import { emphasize } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const initialState = {

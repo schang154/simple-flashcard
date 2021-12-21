@@ -1,13 +1,12 @@
 import React from "react";
-
-import theme from "../../theme/theme";
-import { ThemeProvider } from "@mui/material/styles";
+import reducers from "../../../reducers";
+import theme from "../../../theme/theme";
 import Navbar from "../Navbar/Navbar";
-import { Container } from "@mui/material";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import reducers from "../../reducers";
+import { Container } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
 const Layout = ({ pageTitle, children }) => {

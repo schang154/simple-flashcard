@@ -3,9 +3,11 @@ import { useCallback } from "react";
 import { Link, navigate } from "gatsby";
 import { useDispatch } from "react-redux";
 import { useLocation } from "@reach/router";
-import { LOGOUT } from "../../constants/actionTypes";
-import decode from "jwt-decode";import { AppBar, Box, Toolbar, IconButton, Typography } from "@mui/material";
-import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";import HomeIcon from "@mui/icons-material/Home";
+import { LOGOUT } from "../../../constants/actionTypes";
+import decode from "jwt-decode";
+import { AppBar, Box, Toolbar, IconButton, Typography } from "@mui/material";
+import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";
+import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = () => {
@@ -33,8 +35,7 @@ const Navbar = () => {
       return () => clearTimeout(logout);
     }
 
-    
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       !user && setUser(JSON.parse(localStorage.getItem("userProfile")));
     }
   }, [user, location, logOut]);
