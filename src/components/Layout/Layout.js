@@ -1,6 +1,6 @@
 import React from "react";
-import reducers from "../../../reducers";
-import theme from "../../../theme/theme";
+import reducers from "../../reducers";
+import theme from "../../theme/theme";
 import Navbar from "../Navbar/Navbar";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";

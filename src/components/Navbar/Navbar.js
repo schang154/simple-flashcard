@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { Link, navigate } from "gatsby";
 import { useDispatch } from "react-redux";
 import { useLocation } from "@reach/router";
-import { LOGOUT } from "../../../constants/actionTypes";
+import { LOGOUT } from "../../constants/actionTypes";
 import decode from "jwt-decode";
 import { AppBar, Box, Toolbar, IconButton, Typography } from "@mui/material";
 import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";

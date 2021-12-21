@@ -1,8 +1,8 @@
 import React from "react";
 import { emphasize } from "@mui/material/styles";
-import Layout from "./components/Layout/Layout";
+import Layout from "../components/Layout/Layout";
 import { Link } from "gatsby";
-import FlashCard from "./components/FlashCards/FlashCard/FlashCard";
+import FlashCard from "../components/FlashCards/FlashCard/FlashCard";
 import { Typography } from "@mui/material";
 
 const IndexPage = () => {

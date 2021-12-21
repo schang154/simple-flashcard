@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as FlashCardStyles from "./FlashCard.module.css";
-import { deleteCard, favoriteCard } from "../../../../actions/cards";
+import { deleteCard, favoriteCard } from "../../../actions/cards";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -13,7 +13,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import theme from "../../../../theme/theme";
+import theme from "../../../theme/theme";
 
 const FlashCard = ({ card, setCurrentCardId, setIsEdit }) => {
   const [isFlip, setIsFlip] = useState(false);

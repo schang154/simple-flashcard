@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AUTH } from "../../../constants/actionTypes";
-import { signIn, signUp } from "../../../actions/auth";
+import { AUTH } from "../../constants/actionTypes";
+import { signIn, signUp } from "../../actions/auth";
 import { navigate } from "gatsby";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
