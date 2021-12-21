@@ -33,7 +33,10 @@ const Navbar = () => {
       return () => clearTimeout(logout);
     }
 
-    !user && setUser(JSON.parse(localStorage.getItem("userProfile")));
+    
+    if (typeof window !== 'undefined') {
+      !user && setUser(JSON.parse(localStorage.getItem("userProfile")));
+    }
   }, [user, location, logOut]);
 
   return (

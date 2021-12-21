@@ -3,10 +3,12 @@ import axios from 'axios';
 const API = axios.create({ baseURL: "https://simple-flashcard-app.herokuapp.com/api/v1" });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("userProfile")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userProfile")).token}`
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem("userProfile")) {
+      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userProfile")).token}`
+    }
+    return req;
   }
-  return req;
 });
 
 const card = `/cards`;
