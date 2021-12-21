@@ -1,17 +1,17 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
 
 const primaryColor = { 
-    'main': '#ced7db', 
-    'light': '#ffffff',
-    'dark': '#9da6a9',
-    'contrastText': '#000000'
+    'main': '#bbdefb', 
+    'light': '#eeffff',
+    'dark': '#8aacc8',
+    'contrastText': '#37474f'
 };
 
 const secondaryColor = { 
-    'main': '#546e7a', 
-    'light': '#819ca9',
-    'dark': '#29434e',
-    'contrastText': '#ffffff'
+    'main': '#e8eaf6', 
+    'light': '#ffffff',
+    'dark': '#b6b8c3',
+    'contrastText': '#37474f'
 };
 
 const theme = createTheme({
@@ -29,6 +29,38 @@ const theme = createTheme({
         contrastText: secondaryColor.contrastText,
       },
     },
+    components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            color: primaryColor.contrastText
+          }
+        }
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            "&:hover": {
+              backgroundColor: alpha("#000", 0.10)
+            }
+          },
+        }
+      },
+      MuiButton: {
+        styleOverrides: {
+          containedPrimary: {
+            "&:hover": {
+              color: secondaryColor.light
+            }
+          },
+          containedSecondary: {
+            "&:hover": {
+              color: secondaryColor.light
+            }
+          }
+        }
+      }
+    }
   });
 
 export default theme;

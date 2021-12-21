@@ -1,13 +1,31 @@
-import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Collapse,
+  Container,
+} from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+
+import { useSelector, useDispatch } from "react-redux";
 import { createCard, updateCard } from "../../actions/cards";
 
-const Form = ({ currentCardId, setCurrentCardId }) => {
+const TextFieldStyle = {
+  my: 1,
+};
+
+const ButtonStyle = {
+  my: 0.5,
+};
+
+const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isAll }) => {
+  const [scrollLocation, setScrollLocation] = useState(window.pageYOffset);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [cardData, setCardData] = useState({
     frontMessage: "",
     backMessage: "",
@@ -17,11 +35,32 @@ const Form = ({ currentCardId, setCurrentCardId }) => {
     (state) =>
       currentCardId && state.cards.find((card) => card._id === currentCardId)
   );
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (card) setCardData(card);
-  }, [card]);
+  const handleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+  
+  const clear = useCallback(() => {
+    setCurrentCardId(null);
+    setIsEdit(false);
+    setCardData({
+      frontMessage: "",
+      backMessage: "",
+      tags: "",
+    });
+  },[setCurrentCardId, setIsEdit, setCardData]);
+  
+  const handleScroll = useCallback(() => {
+    setScrollLocation(window.pageYOffset);
+    if (window.pageYOffset === 0 && !isOneCard && isAll) {
+      setIsExpanded(true)
+    } else {
+      setIsExpanded(false);
+      clear();
+    }
+  },[isAll, isOneCard, clear, setIsExpanded, setScrollLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,73 +71,97 @@ const Form = ({ currentCardId, setCurrentCardId }) => {
     }
     clear();
   };
+  
+  useEffect(() => {
+    if (card) setCardData(card);
+  }, [card]);
 
-  const clear = () => {
-    setCurrentCardId(null);
-    setCardData({
-      frontMessage: "",
-      backMessage: "",
-      tags: "",
-    });
-  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll,scrollLocation]);
+
+  useEffect(() => {
+    edit && setIsExpanded(true);
+  }, [edit]);
 
   return (
-    <Paper elevation={3} sx={{ padding: 2, margin: 2 }}>
+    <Paper elevation={3} sx={{ padding: 2 }}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Typography variant="h6">
-          {currentCardId ? "Editing" : "Creating"} a Card
-        </Typography>
-        <TextField
-          name="frontMessage"
-          variant="outlined"
-          label="Front Message"
-          fullWidth
-          value={cardData.frontMessage}
-          onChange={(e) =>
-            setCardData({ ...cardData, frontMessage: e.target.value })
-          }
-        />
-        <TextField
-          name="backMessage"
-          variant="outlined"
-          label="Back Message"
-          fullWidth
-          value={cardData.backMessage}
-          onChange={(e) =>
-            setCardData({ ...cardData, backMessage: e.target.value })
-          }
-        />
-        <TextField
-          name="tags"
-          variant="outlined"
-          label="Tags"
-          fullWidth
-          value={cardData.tags}
-          onChange={(e) => {
-            setCardData({
-              ...cardData,
-              tags: e.target.value.replace(/ /g, "").split(","),
-            });
-          }}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          fullWidth
-        >
-          Submit
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={clear}
-          fullWidth
-        >
-          Clear
-        </Button>
+        <Container sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6">
+            {currentCardId ? "Editing" : "Making"} a flashcard...
+          </Typography>
+          <Button
+            onClick={handleExpand}
+            aria-expanded={isExpanded}
+            aria-label="show more"
+            color="secondary"
+            sx={{ justifyContent: "end" }}
+          >
+            {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </Button>
+        </Container>
+        <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+          <TextField
+            name="frontMessage"
+            variant="outlined"
+            label="Front Message"
+            fullWidth
+            sx={TextFieldStyle}
+            value={cardData.frontMessage}
+            onChange={(e) =>
+              setCardData({ ...cardData, frontMessage: e.target.value })
+            }
+          />
+          <TextField
+            name="backMessage"
+            variant="outlined"
+            label="Back Message"
+            fullWidth
+            sx={TextFieldStyle}
+            value={cardData.backMessage}
+            onChange={(e) =>
+              setCardData({ ...cardData, backMessage: e.target.value })
+            }
+          />
+          <TextField
+            name="tags"
+            variant="outlined"
+            label="Tags"
+            fullWidth
+            sx={TextFieldStyle}
+            value={cardData.tags}
+            onChange={(e) => {
+              setCardData({
+                ...cardData,
+                tags: e.target.value.replace(/ /g, "").split(","),
+              });
+            }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            type="submit"
+            fullWidth
+            sx={ButtonStyle}
+          >
+            {edit ? "Update" : "Submit"}
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={clear}
+            fullWidth
+            sx={ButtonStyle}
+          >
+            Clear
+          </Button>
+        </Collapse>
       </form>
     </Paper>
   );

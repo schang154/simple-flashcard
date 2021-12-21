@@ -11,6 +11,16 @@ export const getCards = () => async (dispatch) => {
   }
 };
 
+export const getCardCount = () => async (dispatch) => {
+  try {
+    const { data } = await api.getCardCount();
+
+    dispatch({ type: FETCH_ALL, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createCard = (card) => async (dispatch) => {
   try {
     const { data } = await api.createCard(card);

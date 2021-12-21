@@ -1,12 +1,11 @@
+import { Container } from "@mui/material";
 import React from "react";
-import Layout from "../components/Layout/Layout";
 
 const Profile = () => {
-
     return (
-        <Layout pageTitle={"Profile"}>
+        <Container component="main">
             Profile
-        </Layout>
+        </Container>
     );
 }
 

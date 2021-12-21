@@ -2,9 +2,10 @@
 .card-container {
   position: relative;
   z-index: 1;
-  margin: 32px auto;
+  margin: 10px auto;
   max-width: 500px;
-  height: 420px;
+  height: calc( 100vh - 100px );
+  max-height: 500px;
   perspective: 2000px;
 }
 
@@ -37,7 +38,6 @@
   color: #212121;
   background-color: #fff;
   backface-visibility: hidden;
-  box-shadow: 0 10px 35px rgba(50,50,93,.1),0 2px 15px rgba(0,0,0,.07);
   border-radius: 10px;
 }
   
@@ -56,6 +56,8 @@
 /*- Card Content -*/
 .card-content {
   height: 100%;
+  overflow-y: auto;
+  overflow-wrap: break-word;
 }
 
 .more-edit-icon {
@@ -66,25 +68,30 @@
   transition: opacity 0.5s ease-in;
 }
 
-.bottom-icon {
+.bottom-row {
   position: absolute;
-  z-index: 99;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   bottom: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.bottom-icon {
+  z-index: 99;
   right: 0;
   height: fit-content;
-  transition: opacity 0.5s ease-in;
+  text-align: center;
 }
 
 .more-edit-icon button:hover, .bottom-icon button:hover {
-  color: #212121;
+  color: #b6b8c3;
 }
 
 .tag-container {
-  position: absolute;
-  bottom: 0;
   padding-left: 10px;
-  padding-bottom: 5px;
-  transition: opacity 0.5s ease-in;
 }
 
 .hide {

@@ -1,39 +1,62 @@
 import React, { useState } from "react";
-import Card from "@mui/material/Card";
-// import CardActions from '@mui/material/CardActions';
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { useDispatch } from "react-redux";
 import * as FlashCardStyles from "./FlashCard.module.css";
-import { CardActionArea } from "@mui/material";
+import { deleteCard, favoriteCard } from "../../../actions/cards";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useDispatch } from "react-redux";
-import { deleteCard, favoriteCard } from "../../../actions/cards";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+  Card,
+  CardContent,
+  CardActionArea,
+  Button,
+  Typography,
+} from "@mui/material";
+import theme from "../../../theme/theme";
 
-const FlashCard = ({ card, setCurrentCardId }) => {
+const FlashCard = ({ card, setCurrentCardId, setIsEdit }) => {
   const [isFlip, setIsFlip] = useState(false);
   const [isFavorite, setIsFavorite] = useState(card.favorite);
+  const path = typeof window !== "undefined" && window.location.pathname;
   const dispatch = useDispatch();
-  const handleFlip = () => setIsFlip(!isFlip);
+
+  const handleFlip = () => setIsFlip((prevState) => !prevState);
+
   const handleEdit = () => {
-    setCurrentCardId(card._id);
+    if (path !== "/") {
+      setCurrentCardId(card._id);
+      setIsEdit(true);
+      window.scrollTo(0,0);
+    }
   };
+
   const handleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    dispatch(favoriteCard(card._id));
+    setIsFavorite((prevState) => !prevState);
+    if (path !== "/") {
+      dispatch(favoriteCard(card._id));
+    }
   };
-  const handleDelete = () => dispatch(deleteCard(card._id));
+
+  const handleDelete = () => {
+    if (path !== "/") {
+      dispatch(deleteCard(card._id));
+    }
+  };
 
   return (
     <div className={FlashCardStyles.cardContainer}>
       <div
         className={isFlip ? FlashCardStyles.hide : FlashCardStyles.moreEditIcon}
       >
-        <Button onClick={handleEdit}>
-          <MoreHorizIcon fontSize="medium" />
+        <Button
+          onClick={handleEdit}
+          sx={{
+            fontSize: { xs: 10, sm: 14 },
+            color: theme.palette.secondary.main,
+          }}
+        >
+          <EditIcon fontSize="medium" />
         </Button>
       </div>
       <div
@@ -51,6 +74,7 @@ const FlashCard = ({ card, setCurrentCardId }) => {
                ${FlashCardStyles.flipFront}`
               : `${FlashCardStyles.card} ${FlashCardStyles.sideFront}`
           }
+          elevation={8}
         >
           <CardActionArea className={FlashCardStyles.cardContent}>
             <CardContent>
@@ -61,6 +85,7 @@ const FlashCard = ({ card, setCurrentCardId }) => {
         <Card
           onClick={handleFlip}
           className={`${FlashCardStyles.card} ${FlashCardStyles.sideBack}`}
+          elevation={8}
         >
           <CardActionArea className={FlashCardStyles.cardContent}>
             <CardContent>
@@ -69,27 +94,47 @@ const FlashCard = ({ card, setCurrentCardId }) => {
           </CardActionArea>
         </Card>
       </div>
-      <div className={isFlip ? FlashCardStyles.hide : FlashCardStyles.tagContainer}>
+      <div className={isFlip ? FlashCardStyles.hide : FlashCardStyles.bottomRow }>
+        <div
+          className={FlashCardStyles.tagContainer}
+        >
           <Typography variant="caption" display="block" color="GrayText">
-            {(card.tags.length >= 1 && card.tags[0] !== "") && card.tags.map((tag) => `#${tag} `)}
+            {card.tags.length >= 1 &&
+              card.tags[0] !== "" &&
+              card.tags.map((tag) => `#${tag} `)}
           </Typography>
-      </div>
-      <div
-        className={isFlip ? FlashCardStyles.hide : FlashCardStyles.bottomIcon}
-      >
-        <Button onClick={handleFavorite}>
-          {isFavorite ? (
-            <FavoriteIcon fontSize="medium" />
-          ) : (
-            <FavoriteBorderIcon fontSize="medium" />
-          )}
-          Favorite
-        </Button>
+        </div>
+        <div
+          className={FlashCardStyles.bottomIcon}
+        >
+          <Button
+            onClick={handleFavorite}
+            sx={{
+              fontSize: { xs: 10, sm: 14 },
+              color: theme.palette.secondary.main,
+              py: { xs: 0, sm: 1 }
+            }}
+          >
+            {isFavorite ? (
+              <FavoriteIcon fontSize="medium" />
+            ) : (
+              <FavoriteBorderIcon fontSize="medium" />
+            )}
+            Favorite
+          </Button>
 
-        <Button onClick={handleDelete}>
-          <DeleteIcon fontSize="medium" />
-          Delete
-        </Button>
+          <Button
+            sx={{
+              fontSize: { xs: 10, sm: 14 },
+              color: theme.palette.secondary.main,
+              py: { xs: 0, sm: 1 }
+            }}
+            onClick={handleDelete}
+          >
+            <DeleteIcon fontSize="medium" />
+            Delete
+          </Button>
+        </div>
       </div>
     </div>
   );
