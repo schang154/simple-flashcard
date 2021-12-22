@@ -8,6 +8,7 @@ import { Button, Paper, Grid, Typography, Container } from "@mui/material";
 import Input from "../Input/Input";
 import { emphasize } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
+import Load from "../Load/Load";
 
 const initialState = {
   firstName: "",
@@ -19,6 +20,7 @@ const initialState = {
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const SignUpOrInText = isSignUp ? "Sign Up" : "Sign In";
@@ -32,6 +34,7 @@ const Login = () => {
     } else {
       dispatch(signIn(formData));
     }
+    setIsLoggingIn(true);
   };
 
   const handleShowPassword = () => {
@@ -64,6 +67,7 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="sm">
+      {isLoggingIn && <Load />}
       <Paper elevation={3} sx={{ mt: 4, py: 1, px: 2 }}>
         <Typography
           variant="h5"
@@ -136,6 +140,7 @@ const Login = () => {
                     Google Sign In
                   </Button>
                 )}
+                onRequest={()=>{setIsLoggingIn(true)}}
                 onSuccess={googleSignInSuccess}
                 onFailure={googleSignInFailure}
                 cookiePolicy="single_host_origin"
