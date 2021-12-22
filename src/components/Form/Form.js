@@ -1,23 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-
+import { createCard, updateCard } from "../../actions/cards";
+import { useSelector, useDispatch } from "react-redux";
 import {
   TextField,
   Button,
   Typography,
   Paper,
-  // Collapse,
-  // Container,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  // Box
 } from "@mui/material";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-
-import { useSelector, useDispatch } from "react-redux";
-import { createCard, updateCard } from "../../actions/cards";
 
 const TextFieldStyle = {
   my: 1,
@@ -27,8 +20,7 @@ const ButtonStyle = {
   my: 0.5,
 };
 
-const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isAll }) => {
-  const [scrollLocation, setScrollLocation] = useState(window.pageYOffset);
+const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [cardData, setCardData] = useState({
     frontMessage: "",
@@ -55,16 +47,6 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
       tags: "",
     });
   },[setCurrentCardId, setIsEdit, setCardData]);
-  
-  const handleScroll = useCallback(() => {
-    setScrollLocation(window.pageYOffset);
-    if (window.pageYOffset === 0 && !isOneCard && isAll) {
-      setIsExpanded(true)
-    } else {
-      setIsExpanded(false);
-      clear();
-    }
-  },[isAll, isOneCard, clear, setIsExpanded, setScrollLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,19 +63,11 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
   }, [card]);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll,scrollLocation]);
-
-  useEffect(() => {
     edit && setIsExpanded(true);
   }, [edit]);
 
   return (
     <Paper elevation={3}>
-      {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}> */}
       <Accordion expanded={isExpanded}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon onClick={handleExpand}/>}
@@ -103,17 +77,6 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             {currentCardId ? "Editing" : "Making"} a flashcard...
           </Typography>
         </AccordionSummary>
-        {/* <Button
-          onClick={handleExpand}
-          aria-expanded={isExpanded}
-          aria-label="show more"
-          color="secondary"
-          sx={{ justifyContent: "end" }}
-        >
-          {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </Button> */}
-      {/* </Box> */}
-      {/* <Collapse in={isExpanded} timeout="auto"> */}
         <AccordionDetails>
           <form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <TextField
@@ -177,7 +140,6 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
           </form>
         </AccordionDetails>
       </Accordion>
-      {/* </Collapse> */}
     </Paper>
   );
 };
