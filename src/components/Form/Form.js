@@ -43,7 +43,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
   const dispatch = useDispatch();
 
   const handleExpand = () => {
-    setIsExpanded(!isExpanded);
+    setIsExpanded((prev) => !prev);
   };
   
   const clear = useCallback(() => {
@@ -94,9 +94,9 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
   return (
     <Paper elevation={3}>
       {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}> */}
-      <Accordion expanded={isExpanded} onClick={handleExpand}>
+      <Accordion expanded={isExpanded}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon onClick={handleExpand}/>}
           aria-controls="card-form"
         >
           <Typography variant="h6">
