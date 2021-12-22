@@ -4,8 +4,10 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: "My First Gatsby Site",
-    siteUrl: `https://www.yourdomain.tld`,
+    title: "Simple Flashcard App",
+    siteUrl: `https://simpleflashcard.gatsbyjs.io/`,
+    description: `Flashcard app allows users to create their own flashcards and start memorizing them.`,
+    lang: 'en-ca',
   },
   plugins: [],
 };

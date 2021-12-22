@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import { Link } from "gatsby";
 import FlashCard from "../components/FlashCards/FlashCard/FlashCard";
 import { Typography } from "@mui/material";
+import Seo from "../components/Seo/Seo";
 
 const IndexPage = () => {
   const user =
@@ -35,6 +36,7 @@ const IndexPage = () => {
 
   return (
     <Layout pageTitle={"Flash Card Homepage"}>
+      <Seo />
       <Typography variant="h3" align="center" sx={{ mb: 4 }}>
         Welcome to Flashcard!
       </Typography>
