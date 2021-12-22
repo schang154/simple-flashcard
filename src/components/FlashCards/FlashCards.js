@@ -90,7 +90,7 @@ const FlashCards = ({ setCurrentCardId, setIsEdit, isAll, cards }) => {
   if (!cards) {
     return <CircularProgress />;
   } else if (cards.length === 0) {
-    return <p>No cards for now.</p>;
+    return <p>You haven't created any card yet.</p>;
   } else {
     return (
       <Container

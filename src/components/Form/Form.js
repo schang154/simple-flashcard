@@ -148,6 +148,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             type="submit"
             fullWidth
             sx={ButtonStyle}
+            aria-label="submit form"
           >
             {edit ? "Update" : "Submit"}
           </Button>
@@ -158,6 +159,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             onClick={clear}
             fullWidth
             sx={ButtonStyle}
+            aria-label="clear form"
           >
             Clear
           </Button>

@@ -27,14 +27,16 @@ const Home = () => {
   const handleCheck = (e) => {
     e.target.checked && setIsOneCard(false);
     setIsAll(e.target.checked);
-  }
-  
+  };
+
   const handleSearch = (e) => {
     setTagName(e.target.value);
   };
 
   useEffect(() => {
-    const filteredCards = cards.filter((card) => card.tags.join("").includes(tagName));
+    const filteredCards = cards.filter((card) =>
+      card.tags.join("").includes(tagName)
+    );
     setFilteredCard(filteredCards);
     filteredCards.length === 1 ? setIsOneCard(true) : setIsOneCard(false);
   }, [cards, tagName]);
@@ -70,9 +72,15 @@ const Home = () => {
             alignItems: "center",
           }}
           onChange={handleSearch}
+          aria-label="search tags"
         />
         <Box sx={{ textAlign: "end", my: 3, flex: 3 }}>
-          <Switch checked={isAll} onChange={handleCheck} name="all" />
+          <Switch
+            checked={isAll}
+            onChange={handleCheck}
+            name="all"
+            aria-label="show all flashcards"
+          />
           <Typography variant="h7">Show All</Typography>
         </Box>
       </Container>

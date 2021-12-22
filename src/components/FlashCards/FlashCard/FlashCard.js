@@ -53,8 +53,9 @@ const FlashCard = ({ card, setCurrentCardId, setIsEdit }) => {
           onClick={handleEdit}
           sx={{
             fontSize: { xs: 10, sm: 14 },
-            color: theme.palette.secondary.main,
+            color: theme.palette.secondary.dark,
           }}
+          aria-label="edit flashcard"
         >
           <EditIcon fontSize="medium" />
         </Button>
@@ -111,9 +112,10 @@ const FlashCard = ({ card, setCurrentCardId, setIsEdit }) => {
             onClick={handleFavorite}
             sx={{
               fontSize: { xs: 10, sm: 14 },
-              color: theme.palette.secondary.main,
+              color: theme.palette.secondary.dark,
               py: { xs: 0, sm: 1 }
             }}
+            aria-label="favorite flashcard"
           >
             {isFavorite ? (
               <FavoriteIcon fontSize="medium" />
@@ -126,10 +128,11 @@ const FlashCard = ({ card, setCurrentCardId, setIsEdit }) => {
           <Button
             sx={{
               fontSize: { xs: 10, sm: 14 },
-              color: theme.palette.secondary.main,
+              color: theme.palette.secondary.dark,
               py: { xs: 0, sm: 1 }
             }}
             onClick={handleDelete}
+            aria-label="delete flashcard"
           >
             <DeleteIcon fontSize="medium" />
             Delete
