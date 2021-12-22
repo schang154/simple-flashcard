@@ -11,6 +11,8 @@ export const signIn = ( formData ) => async (dispatch) => {
     navigate("/app/", { replace: true });
   } catch (error) {
     console.log(error);
+    alert("User doesn't exist.")
+    window.location.reload();
   }
 };
 
