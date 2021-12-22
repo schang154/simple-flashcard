@@ -5,12 +5,16 @@ import {
   Button,
   Typography,
   Paper,
-  Collapse,
-  Container,
+  // Collapse,
+  // Container,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  // Box
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 import { useSelector, useDispatch } from "react-redux";
 import { createCard, updateCard } from "../../actions/cards";
@@ -88,88 +92,92 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
   }, [edit]);
 
   return (
-    <Paper elevation={3} sx={{ padding: 2 }}>
-      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Container sx={{ display: "flex", justifyContent: "space-between" }}>
+    <Paper elevation={3}>
+      {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}> */}
+      <Accordion expanded={isExpanded} onClick={handleExpand}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="card-form"
+        >
           <Typography variant="h6">
             {currentCardId ? "Editing" : "Making"} a flashcard...
           </Typography>
-          <Button
-            onClick={handleExpand}
-            aria-expanded={isExpanded}
-            aria-label="show more"
-            color="secondary"
-            sx={{ justifyContent: "end" }}
-          >
-            {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </Button>
-        </Container>
-        <Collapse in={isExpanded} timeout="auto">
-          <TextField
-            name="frontMessage"
-            variant="outlined"
-            label="Front Message"
-            fullWidth
-            sx={TextFieldStyle}
-            value={cardData.frontMessage}
-            onChange={(e) => {
-              setIsExpanded(true);
-              setCardData({ ...cardData, frontMessage: e.target.value });
-            }}
-          />
-          <TextField
-            name="backMessage"
-            variant="outlined"
-            label="Back Message"
-            fullWidth
-            sx={TextFieldStyle}
-            value={cardData.backMessage}
-            onChange={(e) => {
-              setIsExpanded(true);
-              setCardData({ ...cardData, backMessage: e.target.value });
-            }}
-          />
-          <TextField
-            name="tags"
-            variant="outlined"
-            label="Tags"
-            fullWidth
-            sx={TextFieldStyle}
-            value={cardData.tags}
-            onChange={(e) => {
-              setIsExpanded(true);
-              setCardData({
-                ...cardData,
-                tags: e.target.value.replace(/ /g, "").split(","),
-              });
-            }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            fullWidth
-            sx={ButtonStyle}
-            aria-label="submit form"
-          >
-            {edit ? "Update" : "Submit"}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={(e)=>{
-              clear();
-            }}
-            fullWidth
-            sx={ButtonStyle}
-            aria-label="clear form"
-          >
-            Clear
-          </Button>
-        </Collapse>
-      </form>
+        </AccordionSummary>
+        {/* <Button
+          onClick={handleExpand}
+          aria-expanded={isExpanded}
+          aria-label="show more"
+          color="secondary"
+          sx={{ justifyContent: "end" }}
+        >
+          {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </Button> */}
+      {/* </Box> */}
+      {/* <Collapse in={isExpanded} timeout="auto"> */}
+        <AccordionDetails>
+          <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+            <TextField
+              name="frontMessage"
+              variant="outlined"
+              label="Front Message"
+              fullWidth
+              sx={TextFieldStyle}
+              value={cardData.frontMessage}
+              onChange={(e) => {
+                setCardData({ ...cardData, frontMessage: e.target.value });
+              }}
+            />
+            <TextField
+              name="backMessage"
+              variant="outlined"
+              label="Back Message"
+              fullWidth
+              sx={TextFieldStyle}
+              value={cardData.backMessage}
+              onChange={(e) => {
+                setCardData({ ...cardData, backMessage: e.target.value });
+              }}
+            />
+            <TextField
+              name="tags"
+              variant="outlined"
+              label="Tags"
+              fullWidth
+              sx={TextFieldStyle}
+              value={cardData.tags}
+              onChange={(e) => {
+                setCardData({
+                  ...cardData,
+                  tags: e.target.value.replace(/ /g, "").split(","),
+                });
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              type="submit"
+              fullWidth
+              sx={ButtonStyle}
+              aria-label="submit form"
+            >
+              {edit ? "Update" : "Submit"}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={clear}
+              fullWidth
+              sx={ButtonStyle}
+              aria-label="clear form"
+            >
+              Clear
+            </Button>
+          </form>
+        </AccordionDetails>
+      </Accordion>
+      {/* </Collapse> */}
     </Paper>
   );
 };
