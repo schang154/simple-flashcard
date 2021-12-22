@@ -64,7 +64,6 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     if (currentCardId) {
       dispatch(updateCard(currentCardId, cardData));
     } else {
@@ -105,7 +104,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </Button>
         </Container>
-        <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+        <Collapse in={isExpanded} timeout="auto">
           <TextField
             name="frontMessage"
             variant="outlined"
@@ -114,7 +113,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             sx={TextFieldStyle}
             value={cardData.frontMessage}
             onChange={(e) => {
-              e.stopPropagation();
+              setIsExpanded(true);
               setCardData({ ...cardData, frontMessage: e.target.value });
             }}
           />
@@ -126,10 +125,9 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             sx={TextFieldStyle}
             value={cardData.backMessage}
             onChange={(e) => {
-              e.stopPropagation();
+              setIsExpanded(true);
               setCardData({ ...cardData, backMessage: e.target.value });
-            }
-            }
+            }}
           />
           <TextField
             name="tags"
@@ -139,7 +137,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             sx={TextFieldStyle}
             value={cardData.tags}
             onChange={(e) => {
-              e.stopPropagation();
+              setIsExpanded(true);
               setCardData({
                 ...cardData,
                 tags: e.target.value.replace(/ /g, "").split(","),
@@ -163,7 +161,6 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             size="large"
             onClick={(e)=>{
               clear();
-              e.stopPropagation();
             }}
             fullWidth
             sx={ButtonStyle}
