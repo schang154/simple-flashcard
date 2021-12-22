@@ -22,7 +22,6 @@ const Layout = ({ pageTitle, children }) => {
         <Container sx={{ mb: 9, pt: 5, minWidth: "320px" }}>{children}</Container>
         <Container
           component="footer"
-          sp
           sx={{
             display: "flex",
             justifyContent: "center",
