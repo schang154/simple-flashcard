@@ -90,7 +90,7 @@ const Navbar = () => {
               <Box sx={{ display: { xs: "flex" }, alignItems: "center" }}>
                 <Typography
                   variant="h6"
-                  sx={{ display: { xs: "none", sm: "flex" } }}
+                  sx={{ display: "flex" }}
                 >
                   Hi, {user.result.name}
                 </Typography>
