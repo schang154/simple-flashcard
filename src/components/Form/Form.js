@@ -64,6 +64,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (currentCardId) {
       dispatch(updateCard(currentCardId, cardData));
     } else {
@@ -112,9 +113,10 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             fullWidth
             sx={TextFieldStyle}
             value={cardData.frontMessage}
-            onChange={(e) =>
-              setCardData({ ...cardData, frontMessage: e.target.value })
-            }
+            onChange={(e) => {
+              e.stopPropagation();
+              setCardData({ ...cardData, frontMessage: e.target.value });
+            }}
           />
           <TextField
             name="backMessage"
@@ -123,8 +125,10 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             fullWidth
             sx={TextFieldStyle}
             value={cardData.backMessage}
-            onChange={(e) =>
-              setCardData({ ...cardData, backMessage: e.target.value })
+            onChange={(e) => {
+              e.stopPropagation();
+              setCardData({ ...cardData, backMessage: e.target.value });
+            }
             }
           />
           <TextField
@@ -135,6 +139,7 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             sx={TextFieldStyle}
             value={cardData.tags}
             onChange={(e) => {
+              e.stopPropagation();
               setCardData({
                 ...cardData,
                 tags: e.target.value.replace(/ /g, "").split(","),
@@ -156,7 +161,10 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit, isOneCard, isA
             variant="contained"
             color="secondary"
             size="large"
-            onClick={clear}
+            onClick={(e)=>{
+              clear();
+              e.stopPropagation();
+            }}
             fullWidth
             sx={ButtonStyle}
             aria-label="clear form"
