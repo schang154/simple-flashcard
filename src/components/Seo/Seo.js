@@ -19,15 +19,16 @@ const Seo = ({ meta, title }) => {
   );
   
   const metaDescription = site.siteMetadata?.description;
-  const defaultTitle = site.siteMetadata?.title;
+  const defaultTitle = site.siteMetadata?.title | title;
   const defaultLang = site.siteMetadata?.lang;
+  const url = `https://simpleflashcard.gatsbyjs.io/`;
 
   return (
     <Helmet
       htmlAttributes={{
         lang: defaultLang,
       }}
-      title={title}
+      title={defaultTitle}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
       meta={[
         {
@@ -36,7 +37,15 @@ const Seo = ({ meta, title }) => {
         },
         {
           property: `og:title`,
-          content: title,
+          content: defaultTitle,
+        },
+        {
+          property: `og:url`,
+          content: url,
+        },
+        {
+          property: `og:site_name`,
+          content: defaultTitle,
         },
         {
           property: `og:description`,
