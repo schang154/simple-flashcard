@@ -28,14 +28,14 @@ const IndexPage = () => {
           },
         }}
       >
-        Try the Flash Card App
+        Try the Flashcard App
       </Typography>
     ),
     tags: ["final", "important"],
   };
 
   return (
-    <Layout pageTitle={"Flash Card Homepage"}>
+    <Layout pageTitle={"Simple Flashcard"}>
       <Seo />
       <Typography variant="h3" align="center" sx={{ mb: 4 }}>
         Welcome to Flashcard!
