@@ -19,7 +19,7 @@ const initialState = {
 };
 
 const Login = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
