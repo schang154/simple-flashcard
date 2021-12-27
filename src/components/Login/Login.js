@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { AUTH } from "../../constants/actionTypes";
+import React, { useEffect, useState } from "react";
+import { AUTH, LOADING, STOP_LOADING } from "../../constants/actionTypes";
 import { signIn, signUp } from "../../actions/auth";
 import { navigate } from "gatsby";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 import { Button, Paper, Grid, Typography, Container } from "@mui/material";
 import Input from "../Input/Input";
@@ -19,13 +19,14 @@ const initialState = {
 };
 
 const Login = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
-  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const SignUpOrInText = isSignUp ? "Sign Up" : "Sign In";
   const dispatch = useDispatch();
-
+  const { isLoading } = useSelector((state) => state.auth);
+  const user = JSON.parse(localStorage.getItem("userProfile"));
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -34,7 +35,6 @@ const Login = () => {
     } else {
       dispatch(signIn(formData));
     }
-    setIsLoggingIn(true);
   };
 
   const handleShowPassword = () => {
@@ -55,6 +55,7 @@ const Login = () => {
 
     try {
       dispatch({ type: AUTH, data: { result, token } });
+      dispatch({ type: STOP_LOADING });
       navigate("/app/", { replace: true });
     } catch (error) {
       console.log(error);
@@ -65,9 +66,13 @@ const Login = () => {
     console.log(`Sign in Failed: ${error}`);
   };
 
+  useEffect(() => {
+    user && navigate("/app/", { replace: true });
+  }, [user]);
+
   return (
     <Container component="main" maxWidth="sm">
-      {isLoggingIn && <Load />}
+      {isLoading && <Load />}
       <Paper elevation={3} sx={{ mt: 4, py: 1, px: 2 }}>
         <Typography
           variant="h5"
@@ -140,7 +145,7 @@ const Login = () => {
                     Google Sign In
                   </Button>
                 )}
-                onRequest={()=>{setIsLoggingIn(true)}}
+                onRequest={()=>dispatch({ type: LOADING })}
                 onSuccess={googleSignInSuccess}
                 onFailure={googleSignInFailure}
                 cookiePolicy="single_host_origin"

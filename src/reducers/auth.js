@@ -1,7 +1,11 @@
-import { AUTH, LOGOUT } from "../constants/actionTypes";
+import { AUTH, LOGOUT, LOADING, STOP_LOADING } from "../constants/actionTypes";
 
-const auth = (state = { authData: null} , action) => {
+const auth = (state = { isLoading: null, authData: null} , action) => {
     switch (action.type) {
+        case LOADING:
+            return { ...state, isLoading: true };
+          case STOP_LOADING:
+            return { ...state, isLoading: false };
         case AUTH:
             localStorage.setItem("userProfile", JSON.stringify({ ...action?.data }));
             return { ...state, authData: action?.data };
