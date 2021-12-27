@@ -15,8 +15,8 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 const Home = () => {
-  const cards = useSelector((state) => state.cards);
-  const [filteredCard, setFilteredCard] = useState(null);
+  const { cards, isLoading } = useSelector((state) => state.cards);
+  const [filteredCard, setFilteredCard] = useState([]);
   const [currentCardId, setCurrentCardId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [isOneCard, setIsOneCard] = useState(true);
@@ -89,6 +89,7 @@ const Home = () => {
         setIsEdit={setIsEdit}
         isAll={isAll}
         cards={filteredCard}
+        loading={isLoading}
       />
     </Container>
   );

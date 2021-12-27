@@ -29,7 +29,7 @@ const ArrowButton = ({ handleClick, component, label, style }) => {
   );
 };
 
-const FlashCards = ({ setCurrentCardId, setIsEdit, isAll, cards }) => {
+const FlashCards = ({ setCurrentCardId, setIsEdit, isAll, cards, isLoading }) => {
   const [index, setIndex] = useState(0);
   const [movement, setMovement] = useState(null);
   const prevXCoordinate = useRef(window.innerWidth / 2);
@@ -87,9 +87,9 @@ const FlashCards = ({ setCurrentCardId, setIsEdit, isAll, cards }) => {
     }
   }, [isAll, movement, handleBackward, handleForward]);
 
-  if (!cards) {
+  if (isLoading) {
     return <CircularProgress />;
-  } else if (cards.length === 0) {
+  } else if (!cards.length && !isLoading) {
     return <p>You haven't created any card yet.</p>;
   } else {
     return (

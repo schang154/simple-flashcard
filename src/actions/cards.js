@@ -1,11 +1,13 @@
 import * as api from "../api";
-import { CREATE, FETCH_ALL, UPDATE, DELETE } from "../constants/actionTypes";
+import { CREATE, FETCH_ALL, UPDATE, DELETE, LOADING, STOP_LOADING } from "../constants/actionTypes";
 
 export const getCards = () => async (dispatch) => {
   try {
+    dispatch({ type: LOADING });
     const { data } = await api.fetchCards();
 
     dispatch({ type: FETCH_ALL, payload: data });
+    dispatch({ type: STOP_LOADING });
   } catch (error) {
     console.log(error);
   }
@@ -13,9 +15,12 @@ export const getCards = () => async (dispatch) => {
 
 export const getCardCount = () => async (dispatch) => {
   try {
+    dispatch({ type: LOADING });
     const { data } = await api.getCardCount();
 
     dispatch({ type: FETCH_ALL, payload: data });
+    dispatch({ type: STOP_LOADING });
+
   } catch (error) {
     console.log(error);
   }
@@ -23,9 +28,10 @@ export const getCardCount = () => async (dispatch) => {
 
 export const createCard = (card) => async (dispatch) => {
   try {
+    dispatch({ type: LOADING });
     const { data } = await api.createCard(card);
-
     dispatch({ type: CREATE, payload: data });
+    dispatch({ type: STOP_LOADING });
   } catch (error) {
     console.log(error);
   }
