@@ -28,8 +28,8 @@ const Form = ({ currentCardId, setCurrentCardId, edit, setIsEdit }) => {
     tags: "",
   });
   const card = useSelector(
-    (state) =>
-      currentCardId && state.cards.find((card) => card._id === currentCardId)
+    (state) => 
+      currentCardId && state.cards.cards.find((card) => card._id === currentCardId)
   );
 
   const dispatch = useDispatch();
