@@ -36,6 +36,10 @@ const Seo = ({ meta, title }) => {
           content: metaDescription,
         },
         {
+          name: `googlebot`,
+          content: `noindex`,
+        },
+        {
           property: `og:title`,
           content: defaultTitle,
         },
